@@ -609,7 +609,7 @@ if (typeof window.ethereum !== "undefined") {
             message.textContent = 'Login successful!';
             // Redirect to index.html after a successful login
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'index1.html';
             }, 1000); // Redirects after 1 second (optional delay for user feedback)
         } else {
             message.style.color = 'red';
