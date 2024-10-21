@@ -1,4 +1,4 @@
-# Math-Alem
+# Mat-Alem
 Prototype of smart contract
 
 
