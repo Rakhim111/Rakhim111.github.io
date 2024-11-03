@@ -609,7 +609,7 @@ if (typeof window.ethereum !== "undefined") {
             message.textContent = 'Login successful!';
             // Redirect to index.html after a successful login
             setTimeout(() => {
-                window.location.href = 'https://rakhim111.github.io./index1.html';
+                window.location.href = 'index.html';
             }, 1000); // Redirects after 1 second (optional delay for user feedback)
         } else {
             message.style.color = 'red';
@@ -807,4 +807,17 @@ async function calculateTaylorCot() {
   // List Model Form Submission
 
 
+   
+
+  app.get('/resources', (req, res) => {
+    const cpuLoad = os.loadavg()[0]; // Load average over the last 1 minute
+    const totalMem = os.totalmem(); // Total memory
+    const freeMem = os.freemem(); // Free memory
+    const usedMem = totalMem - freeMem; // Used memory
+
+    res.json({
+        cpuLoad: (cpuLoad * 100 / os.cpus().length).toFixed(2), // CPU load percentage
+        ramUsage: (usedMem / 1024 / 1024).toFixed(2) // RAM usage in MB
+    });
+});
    
