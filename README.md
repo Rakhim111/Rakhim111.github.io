@@ -9,12 +9,14 @@ Members:Azimzhanov Rakhim, Zhanibekova Zhanel
 
 
 
-![Снимок экрана (508)](https://github.com/user-attachments/assets/a277f91b-e328-44e0-b65e-974bf42f3f34)
 
 
 
+![Снимок экрана 2024-11-04 135451](https://github.com/user-attachments/assets/5122547f-d823-46cb-bf77-352c81dd1ae2)
+![Снимок экрана 2024-11-04 135436](https://github.com/user-attachments/assets/c99087bf-6709-4319-9255-50e1cd4266bb)
+![Снимок экрана 2024-11-04 135424](https://github.com/user-attachments/assets/6d174d8e-71c0-4a18-900e-f925e31373ea)
+![Снимок экрана 2024-11-04 135459](https://github.com/user-attachments/assets/94f89e06-ab5b-478d-ae94-f0b228e5ca2c)
 
-![Снимок экрана (509)](https://github.com/user-attachments/assets/179366ff-b770-42e8-9b17-a87891e80a36)
 
 
 
