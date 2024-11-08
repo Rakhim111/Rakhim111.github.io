@@ -1,123 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>MATALEM</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-   
+<head>
+  <meta charset="UTF-8" />
+  <title>MATALEM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <section id="account">
-      <p>Connected Account: <span id="accountAddress">Not connected</span></p>
-    </section>
-    <br>
-    <br><br><br>
-    <br>
-    <h1 >Project Description</h1>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="profile.html">Profile Page</a>
+    <a href="login.html">Log Out</a>
+  </nav>
+
+  <section id="account">
+    <p>Connected Account: <span id="accountAddress">Not connected</span></p>
+  </section>
+
+  <br><br><br><br>
   
-      <div class="description-container">
-      <p>Our idea is creating web application, which provides compilation resources with specific </p>
-      <p>cost so consumers may buy it and make some mathematical expressions that their </p>
-      <p>computers “can not execute” (those mathematical expressions can actually execute any </p>
-      <p>computer, and we are doing it for showing the idea). Also provide information about CPU </p>
-      <p>and RAM loading.</p>
-    </div>
-    <!-- CPU and RAM Usage Display with Progress Bars -->
-<h1>System Resource Tracker</h1>
-<div id="resource-info">
+  <h1>Project Description</h1>
+  <div class="description-container">
+    <p>Our idea is creating a web application that provides compilation resources with a specific cost so consumers may buy it and make some mathematical expressions that their computers “cannot execute” (those mathematical expressions can actually execute on any computer, and we are doing it to demonstrate the idea). It also provides information about CPU and RAM loading.</p>
+  </div>
+
+  <!-- CPU and RAM Usage Display with Progress Bars -->
+  <h1>System Resource Tracker</h1>
+  <div id="resource-info">
     <div class="resource-item">
-        <p>CPU Load: <span id="cpu-percentage">Loading...</span></p>
-        <div class="progress-container">
-            <div class="progress-bar" id="cpu-progress-bar">0%</div>
-        </div>
+      <p>CPU Load: <span id="cpu-percentage">Loading...</span></p>
+      <div class="progress-container">
+        <div class="progress-bar" id="cpu-progress-bar">0%</div>
+      </div>
     </div>
     <div class="resource-item">
-        <p>RAM Usage: <span id="ram-percentage">Loading...</span></p>
-        <div class="progress-container">
-            <div class="progress-bar" id="ram-progress-bar">0%</div>
-        </div>
+      <p>RAM Usage: <span id="ram-percentage">Loading...</span></p>
+      <div class="progress-container">
+        <div class="progress-bar" id="ram-progress-bar">0%</div>
+      </div>
     </div>
-</div>
+  </div>
 
+  <!-- Button to Display Available Resources -->
+  <button id="resourceButton" onclick="addAvailableResources()" style="margin-top: 20px; margin-left: 600px;">Place Available Resources</button>
 
-
+  <h1>Compute Taylor Series</h1>
+  <div>
+    <label for="terms">Enter number of terms:</label>
+    <input type="number" id="terms" placeholder="e.g. 10">
+  </div>
+  <div>
+    <label for="xValue">Enter x value:</label>
+    <input type="number" id="xValue" placeholder="e.g. 1">
+  </div>
   
-    <h1>Compute Taylor Series</h1>
-    
-    <div>
-        <label for="terms">Enter number of terms:</label>
-        <input type="number" id="terms" placeholder="e.g. 10">
-    </div>
-    
-    <div>
-        <label for="xValue">Enter x value:</label>
-        <input type="number" id="xValue" placeholder="e.g. 1">
-    </div>
-    <br>
-    
-    <button onclick="calculateTaylorSin()" style="margin-left: 600px;">Calculate Sin(x)</button>
-    <button onclick="calculateTaylorCos()">Calculate Cos(x)</button>
+  <br>
+  <button onclick="calculateTaylorSin()" style="margin-left: 600px;">Calculate Sin(x)</button>
+  <button onclick="calculateTaylorCos()">Calculate Cos(x)</button>
+  
+  <br><br>
+  <button onclick="calculateTaylorTan()" style="margin-left: 600px;">Calculate Tan(x)</button>
+  <button onclick="calculateTaylorCot()">Calculate Cot(x)</button>
+  
+  <br><br>
+  <button onclick="calculateTaylorExp()" style="margin-left: 680px;">Calculate Exp^(x)</button>
+  
+  <br><br>
+  <button onclick="calculateTaylorSin()" style="margin-left: 580px;">Calculate Sin^2(x)</button>
+  <button onclick="calculateTaylorCos()">Calculate Cos^2(x)</button>
+  
+  <br><br>
+  <button onclick="calculateTaylorTan()" style="margin-left: 580px;">Calculate Tan^2(x)</button>
+  <button onclick="calculateTaylorCot()">Calculate Cot^2(x)</button>
+
+  <br><br>
+  <h2>Result: <span id="result"></span></h2>
+  <br><br><br>
+
+  <script>
+    function updateResourceInfo() {
+             fetch('https://a-vn9p.onrender.com/resources')  // Ensure this is the correct path
+                 .then(response => {
+                     if (!response.ok) {
+                         throw new Error('Network response was not ok: ' + response.statusText);
+                     }
+                     return response.json();
+                 })
+                 .then(data => {
+                     // Update CPU and RAM info
+                     document.getElementById('cpu-percentage').innerText = data.cpuLoad + '%';
+                     document.getElementById('ram-percentage').innerText = data.ramUsage + ' MB';
  
-    <br>
-    <br>
-    <button onclick="calculateTaylorTan()"style="margin-left: 600px;"">Calculate Tan(x)</button>
-  
-    <button onclick="calculateTaylorCot()">Calculate Cot(x)</button>
-    <br>
-    <br>
-    <button onclick="calculateTaylorExp()"style="margin-left: 680px;"">Calculate Exp^(x)</button>
-    <br>
-    <br>
-    <button onclick="calculateTaylorSin()" style="margin-left: 580px;">Calculate Sin^2(x)</button>
-    <button onclick="calculateTaylorCos()">Calculate Cos^2(x)</button>
+                     // Update progress bars
+                     document.getElementById('cpu-progress-bar').style.width = data.cpuLoad + '%';
+                     document.getElementById('cpu-progress-bar').innerText = data.cpuLoad + '%';
+                     document.getElementById('ram-progress-bar').style.width = (data.ramUsage / data.totalRam) * 100 + '%';
+                     document.getElementById('ram-progress-bar').innerText = data.ramUsage + ' MB';
+                 })
+                 .catch(error => console.error('Error fetching resource data:', error));
+         }
  
-    <br>
-    <br>
-    <button onclick="calculateTaylorTan()"style="margin-left: 580px;"">Calculate Tan^2(x)</button>
-  
-    <button onclick="calculateTaylorCot()">Calculate Cot^2(x)</button>
-    <br>
-    <br>
-    
-  
-    <h2>Result: <span id="result"></span></h2>
-    <br>
-    <br>
-    <br>
-    <!-- Include Web3.js via CDN -->
-   
-    
-    
-    <script>
-   function updateResourceInfo() {
-            fetch('https://a-vn9p.onrender.com/resources')  // Ensure this is the correct path
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok: ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Update CPU and RAM info
-                    document.getElementById('cpu-percentage').innerText = data.cpuLoad + '%';
-                    document.getElementById('ram-percentage').innerText = data.ramUsage + ' MB';
+         // Call updateResourceInfo every few seconds
+         setInterval(updateResourceInfo, 2000); 
+ 
+     </script> 
 
-                    // Update progress bars
-                    document.getElementById('cpu-progress-bar').style.width = data.cpuLoad + '%';
-                    document.getElementById('cpu-progress-bar').innerText = data.cpuLoad + '%';
-                    document.getElementById('ram-progress-bar').style.width = (data.ramUsage / data.totalRam) * 100 + '%';
-                    document.getElementById('ram-progress-bar').innerText = data.ramUsage + ' MB';
-                })
-                .catch(error => console.error('Error fetching resource data:', error));
-        }
-
-        // Call updateResourceInfo every few seconds
-        setInterval(updateResourceInfo, 2000); 
-
-    </script> 
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-    <script src="app.js"></script>
-   
-  </body>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+  <script src="app.js"></script>
+</body>
 </html>
