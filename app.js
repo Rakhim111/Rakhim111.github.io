@@ -603,14 +603,20 @@ if (typeof window.ethereum !== "undefined") {
         // Call the smart contract's loginConsumer function
         const result = await contract.methods.loginConsumer(email, password).call({ from: account });
 
-        // Handle login result
+        // If login is successful, save all user data
         if (result === '1') {
             message.style.color = 'green';
             message.textContent = 'Login successful!';
-            // Redirect to index.html after a successful login
+
+            // Save user information to localStorage
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+          
+            
+            // Redirect to profile page after successful login
             setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000); // Redirects after 1 second (optional delay for user feedback)
+                window.location.href = 'profile.html';
+            }, 1000);
         } else {
             message.style.color = 'red';
             message.textContent = 'Login failed. Please check your credentials.';
@@ -621,6 +627,54 @@ if (typeof window.ethereum !== "undefined") {
         message.textContent = 'An error occurred. Please try again.';
     }
 }
+
+    // Function to add "Calculate Sin(x)" and "Calculate Cos(x)" buttons permanently with email display
+    function addAvailableResources() {
+		// Retrieve user email from localStorage
+		const userEmail = localStorage.getItem("userEmail");
+  
+		// Store a flag in localStorage to remember that the button was clicked
+		localStorage.setItem('resourcesAdded', 'true');
+  
+		// Add the buttons and email
+		displayResourceButtons(userEmail);
+  
+		// Remove the "Place Available Resources" button
+		const resourceButton = document.getElementById('calculate-sin-button1');
+		if (resourceButton) {
+		  resourceButton.remove();
+		  localStorage.setItem('resourceButtonRemoved', 'true');
+		}
+	  }
+  
+	  // Function to display the buttons on the page
+	  function displayResourceButtons(userEmail) {
+		// Check if the buttons already exist to prevent duplicates
+		if (!document.getElementById('calculate-sin-button')) {
+		  const resourceContainer = document.createElement('div');
+		  resourceContainer.innerHTML = `
+		
+			<button id="calculate-sin-button1" onclick="calculateTaylorSin()" style="margin-left: 600px;">Calculate Sin(x) by ${userEmail}</button>
+			<button id="calculate-cos-button1" onclick="calculateTaylorCos()">Calculate Cos(x) by ${userEmail}</button>
+		  `;
+		  document.body.appendChild(resourceContainer);
+		}
+	  }
+  
+	  // Check localStorage on page load to see if buttons and email should be added, and if the button should be removed
+	  document.addEventListener('DOMContentLoaded', () => {
+		if (localStorage.getItem('calculate-sin-button1') === 'true') {
+		  const userEmail = localStorage.getItem("userEmail");
+		  displayResourceButtons(userEmail);
+		}
+		if (localStorage.getItem('calculate-sin-button1') === 'true') {
+		  const resourceButton = document.getElementById('resourceButton');
+		  if (resourceButton) {
+			resourceButton.remove();
+		  }
+		}
+	  });
+
 async function registerConsumer() {
     const name = document.getElementById('name').value;
     const surname = document.getElementById('surname').value;
@@ -807,17 +861,16 @@ async function calculateTaylorCot() {
   // List Model Form Submission
 
 
-   
 
   app.get('/resources', (req, res) => {
     const cpuLoad = os.loadavg()[0]; // Load average over the last 1 minute
-    const totalMem = os.totalmem(); // Total memory
-    const freeMem = os.freemem(); // Free memory
-    const usedMem = totalMem - freeMem; // Used memory
+    const totalMem = os.totalmem(); // Total memory in bytes
+    const freeMem = os.freemem(); // Free memory in bytes
+    const usedMem = totalMem - freeMem; // Used memory in bytes
 
     res.json({
-        cpuLoad: (cpuLoad * 100 / os.cpus().length).toFixed(2), // CPU load percentage
-        ramUsage: (usedMem / 1024 / 1024).toFixed(2) // RAM usage in MB
+        cpuLoad: ((cpuLoad * 100) / os.cpus().length).toFixed(2), // CPU load as percentage
+        ramUsage: (usedMem / 1024 / 1024).toFixed(2), // RAM usage in MB
+        totalRam: (totalMem / 1024 / 1024).toFixed(2) // Total RAM in MB
     });
 });
-   
