@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="login.html">Log Out</a>
+  </nav>
+
+  <section id="account">
+    <p>Connected Account: <span id="accountAddress">Not connected</span></p>
+  </section>
+
+  <h1>User Profile</h1>
+  <div class="profile-container">
+
+    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+    <p><strong>Password (hashed):</strong> <span id="userPassword">Loading...</span></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Function to populate the profile page with data from localStorage
+    function loadUserProfile() {
+      const userEmail = localStorage.getItem('userEmail');
+      const userPassword = localStorage.getItem('userPassword');
+   
+
+      // Update profile page elements with retrieved data
+      document.getElementById('userEmail').textContent = userEmail || 'Not provided';
+      document.getElementById('userPassword').textContent = userPassword || 'Not provided';
+
+    }
+
+    // Call function to load user profile on page load
+    document.addEventListener('DOMContentLoaded', loadUserProfile);
+  </script>
+</body>
+</html>
