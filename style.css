@@ -233,3 +233,19 @@ button:hover {
     font-weight: bold;
     font-size: 0.9em;
 }
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: black;
+    padding: 10px;
+  }
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+  }
+  .navbar a:hover {
+    background-color: #555;
+  }
